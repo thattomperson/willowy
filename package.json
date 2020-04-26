@@ -5,6 +5,9 @@
   "bin": "./willowy",
   "author": "",
   "license": "ISC",
+  "scripts": {
+    "build-docs": "./willowy docs public"
+  },
   "dependencies": {
     "@rollup/plugin-commonjs": "^11.1.0",
     "@rollup/plugin-node-resolve": "^7.1.3",
