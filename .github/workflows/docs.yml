@@ -9,7 +9,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Build
-        run: npx willow build docs public
+        run: npx willowy build docs public
       - name: deploy
         if: success()
         uses: crazy-max/ghaction-github-pages@v1
