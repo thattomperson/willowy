@@ -4,13 +4,13 @@ export const ChunkGenerator = (Component) => {
 
 export const Chunk = (dynamicImport, Component) => {
   return class SvelteComponentHook {
-      constructor(options){
-          options.props = {
-              ...options.props,
-              dynamicImport
-          }
-          return new Component(options)
+    constructor (options) {
+      options.props = {
+        ...options.props,
+        dynamicImport
       }
+      return new Component(options)
+    }
   }
 }
 

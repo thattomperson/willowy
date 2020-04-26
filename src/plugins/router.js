@@ -7,30 +7,28 @@ const lstat = util.promisify(fs.lstat)
 
 const isDir = async path => (await lstat(path)).isDirectory()
 
-module.exports = function router(pagesDir) {
-  const PREFIX = `\0virtual-router:`;
+module.exports = function router (pagesDir) {
+  const PREFIX = '\0virtual-router:'
 
   const name = 'router-manifest'
 
   return {
     name,
-    resolveId(id, importer) {
+    resolveId (id, importer) {
       if (id === name) {
         return PREFIX + id
       }
     },
-    async load(id) {
+    async load (id) {
       if (id === PREFIX + name) {
-
         const routes = await walk(pagesDir)
         const sort = (a, b) => {
-          if (a.route == '*') {
+          if (a.route === '*') {
             return 1
           }
-          if (b.route == '*') {
+          if (b.route === '*') {
             return -1
           }
-
 
           if (a.route.split('/').length > b.route.split('/').length) {
             return 1
@@ -38,30 +36,29 @@ module.exports = function router(pagesDir) {
             return -1
           }
 
-          if (a.route.length == b.route.length) {
+          if (a.route.length === b.route.length) {
             return 0
           }
           if (a.route.length > b.route.length) {
             return 1
           }
 
-          return -1;
+          return -1
         }
 
-        const render = (routes, prefix = "") => {
-          
+        const render = (routes, prefix = '') => {
           return routes.filter(r => r.children || !r.server).map(route => {
             if (route.children) {
               return render(route.children, path.join(prefix, route.name))
             }
 
             let pathname = path.join(prefix, route.name)
-            
+
             let defaultRoute = null
             if (pathname === '.') {
               pathname = ''
               defaultRoute = {
-                route: `*`,
+                route: '*',
                 hash: Buffer.from(route.file).toString('hex'),
                 import: `import c${Buffer.from(route.file).toString('hex')} from '${route.file}')`
               }
@@ -74,10 +71,10 @@ module.exports = function router(pagesDir) {
           }).flat().filter(a => a).sort(sort)
         }
 
-        const d = render(routes);
+        const d = render(routes)
 
         return `
-        ${d.filter(d => d.route != '*').map(d => d.import).join('\n')}
+        ${d.filter(d => d.route !== '*').map(d => d.import).join('\n')}
         
         // import { ChunkGenerator } from '@willowy/runtime/chunk.js'
         // import ChunkComponent from '@willowy/runtime/Chunk.svelte'
@@ -94,10 +91,8 @@ module.exports = function router(pagesDir) {
   }
 }
 
-
-
-async function walk(dir = './pages', root = '.') {
-  files = await map(await readdir(dir), async p => {
+async function walk (dir = './pages', root = '.') {
+  const files = await map(await readdir(dir), async p => {
     if (p.startsWith('_')) return
     const filepath = path.join(dir, p)
 
@@ -113,9 +108,9 @@ async function walk(dir = './pages', root = '.') {
     }
 
     return {
-      name: name == 'index' ? '' : name,
+      name: name === 'index' ? '' : name,
       server: p.endsWith('.js'),
-      file: filepath,
+      file: filepath
     }
   })
 

@@ -1,8 +1,7 @@
-module.exports = function html() {
+module.exports = function html () {
   return {
     name: 'willowy-html',
-    async generateBundle(output, bundle) {
-
+    async generateBundle (output, bundle) {
       const source = `<!DOCTYPE html>
         <html lang="en">
         <head>
@@ -13,16 +12,16 @@ module.exports = function html() {
           <div id="app"></div>
           <script type="module" src="/dist/client.js"></script>
         </body>
-        </html>`.replace(/\>\s*\</g, '><')
+        </html>`.replace(/>\s*</g, '><')
 
       const htmlFile = {
         type: 'asset',
         source,
         name: 'Rollup HTML Asset',
         fileName: 'index.html'
-      };
+      }
 
-      this.emitFile(htmlFile);
+      this.emitFile(htmlFile)
     }
   }
 }

@@ -1,10 +1,10 @@
-const path = require('path');
+const path = require('path')
 const fs = require('fs')
 const compiler = require('svelte/compiler')
 
-const PREFIX = `\0virtual:`;
+const PREFIX = '\0virtual:'
 
-module.exports = function virtual() {
+module.exports = function virtual () {
   const modules = {}
   const dir = path.join(__dirname, '..', 'runtime')
 
@@ -23,17 +23,17 @@ module.exports = function virtual() {
   return {
     name: 'virtual',
 
-    resolveId(id) {
-      if (id in modules) return PREFIX + id;
+    resolveId (id) {
+      if (id in modules) return PREFIX + id
     },
 
-    load(id) {
+    load (id) {
       if (id.startsWith(PREFIX)) {
         // eslint-disable-next-line no-param-reassign
-        id = id.slice(PREFIX.length);
+        id = id.slice(PREFIX.length)
 
         return id in modules ? modules[id] : null
       }
     }
-  };
+  }
 }
