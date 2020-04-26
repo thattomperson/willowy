@@ -13,7 +13,7 @@ module.exports = function html (routes) {
         </head>
         <body>
           <div id="app"></div>
-          <script type="module" src="/__/client.js"></script>
+          <script type="module" src="/dist/client.js"></script>
         </body>
         </html>`.replace(/>\s*</g, '><')
 

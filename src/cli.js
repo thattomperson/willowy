@@ -55,8 +55,8 @@ const outputOptions = async (dest) => ({
   format: 'esm',
   dir: dest,
   sourcemap: true,
-  chunkFileNames: '__/[name]-[hash].js',
-  entryFileNames: '__/client.js'
+  chunkFileNames: 'dist/[name]-[hash].js',
+  entryFileNames: 'dist/client.js'
 })
 
 const inputOptions = async (src) => {
