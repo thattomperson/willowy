@@ -1,13 +1,6 @@
 const path = require('path')
-const fs = require('fs')
-const util = require('util')
-const { map } = require('async')
-const readdir = util.promisify(fs.readdir)
-const lstat = util.promisify(fs.lstat)
 
-const isDir = async path => (await lstat(path)).isDirectory()
-
-module.exports = function router (pagesDir) {
+module.exports = function router(routes) {
   const PREFIX = '\0virtual-router:'
 
   const name = 'router-manifest'
@@ -21,7 +14,7 @@ module.exports = function router (pagesDir) {
     },
     async load (id) {
       if (id === PREFIX + name) {
-        const routes = await walk(pagesDir)
+        
         const sort = (a, b) => {
           if (a.route === '*') {
             return 1
@@ -87,28 +80,3 @@ module.exports = function router (pagesDir) {
   }
 }
 
-async function walk (dir = './pages', root = '.') {
-  const files = await map(await readdir(dir), async p => {
-    if (p.startsWith('_')) return
-    const filepath = path.join(dir, p)
-
-    const name = p.replace(/\.svelte$/, '')
-      .replace(/\.js$/, '')
-      .replace(/\[(.*)\]/, ':$1')
-
-    if (await isDir(filepath)) {
-      return {
-        name,
-        children: await walk(filepath, root)
-      }
-    }
-
-    return {
-      name: name === 'index' ? '' : name,
-      server: p.endsWith('.js'),
-      file: filepath
-    }
-  })
-
-  return files.filter(a => a)
-}

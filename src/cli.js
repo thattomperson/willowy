@@ -1,5 +1,13 @@
 const sade = require('sade')
 const path = require('path')
+const fs = require('fs')
+const { map } = require('async')
+const util = require('util')
+const readdir = util.promisify(fs.readdir)
+const lstat = util.promisify(fs.lstat)
+
+
+const isDir = async path => (await lstat(path)).isDirectory()
 
 const rollup = require('rollup')
 const commonjs = require('@rollup/plugin-commonjs')
@@ -11,29 +19,59 @@ const html = require('./plugins/html')
 const servor = require('servor')
 const svelteResolve = require('./plugins/svelte-resolve')
 
+
+async function walk(dir = './pages', root = '.') {
+  const files = await map(await readdir(dir), async p => {
+    if (p.startsWith('_')) return
+    const filepath = path.join(dir, p)
+
+    const name = p.replace(/\.svelte$/, '')
+      .replace(/\.js$/, '')
+      .replace(/\[(.*)\]/, ':$1')
+
+    if (await isDir(filepath)) {
+      return {
+        name,
+        children: await walk(filepath, root)
+      }
+    }
+
+    return {
+      name: name === 'index' ? '' : name,
+      server: p.endsWith('.js'),
+      file: filepath
+    }
+  })
+
+  return files.filter(a => a)
+}
+
+
 const pkg = require('../package.json')
 
 const prog = sade(pkg.name).version(pkg.version)
 
-const outputOptions = (dest) => ({
+const outputOptions = async (dest) => ({
   format: 'esm',
   dir: dest,
   sourcemap: true,
-  chunkFileNames: 'dist/[name]-[hash].js',
-  entryFileNames: 'dist/client.js'
+  chunkFileNames: '__/[name]-[hash].js',
+  entryFileNames: '__/client.js'
 })
 
-const inputOptions = (src) => {
+const inputOptions = async (src) => {
+  const routes = await walk(path.join(src, 'pages'))
+  
   return {
     input: '@willowy/runtime/client.js',
     plugins: [
       runtime(),
-      router(path.join(src, 'pages')),
+      router(routes),
       commonjs(),
       resolve(),
       svelteResolve(),
       svelte(),
-      html()
+      html(routes)
     ]
   }
 }
@@ -45,8 +83,8 @@ prog.command('watch [src] [dest]')
     dest = path.resolve(dest)
 
     const watcher = rollup.watch({
-      ...inputOptions(src),
-      output: outputOptions(dest),
+      ...(await inputOptions(src)),
+      output: await outputOptions(dest),
       watch: {}
     })
 
@@ -87,8 +125,8 @@ prog.command('build [src] [dest]')
     src = path.resolve(src)
     dest = path.resolve(dest)
 
-    const bundle = await rollup.rollup(inputOptions(src))
-    await bundle.write(outputOptions(dest))
+    const bundle = await rollup.rollup(await inputOptions(src))
+    await bundle.write(await outputOptions(dest))
   })
 
 prog.parse(process.argv)
