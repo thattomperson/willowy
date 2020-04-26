@@ -6,7 +6,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "build-docs": "./willowy docs public"
+    "build-docs": "./willowy build docs"
   },
   "dependencies": {
     "@rollup/plugin-commonjs": "^11.1.0",
