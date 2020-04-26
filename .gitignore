@@ -1,5 +1,5 @@
-/examples/*/node_modules
-/examples/*/package-lock.json
+/examples/*/
+/examples/*/public
 
 /node_modules/
 /lib/

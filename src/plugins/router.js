@@ -59,14 +59,12 @@ module.exports = function router (pagesDir) {
               pathname = ''
               defaultRoute = {
                 route: '*',
-                hash: Buffer.from(route.file).toString('hex'),
-                import: `import c${Buffer.from(route.file).toString('hex')} from '${route.file}')`
+                import: `Chunk(() => import('${route.file}'))`
               }
             }
             return [{
               route: `/${pathname}`,
-              hash: Buffer.from(route.file).toString('hex'),
-              import: `import c${Buffer.from(route.file).toString('hex')} from '${route.file}'`
+              import: `Chunk(() => import('${route.file}'))`
             }, defaultRoute]
           }).flat().filter(a => a).sort(sort)
         }
@@ -74,14 +72,12 @@ module.exports = function router (pagesDir) {
         const d = render(routes)
 
         return `
-        ${d.filter(d => d.route !== '*').map(d => d.import).join('\n')}
-        
-        // import { ChunkGenerator } from '@willowy/runtime/chunk.js'
-        // import ChunkComponent from '@willowy/runtime/Chunk.svelte'
-        // const Chunk = ChunkGenerator(ChunkComponent)
+        import { ChunkGenerator } from '@willowy/runtime/chunk.js'
+        import ChunkComponent from '@willowy/runtime/Chunk.svelte'
+        const Chunk = ChunkGenerator(ChunkComponent)
 
         export default {
-          ${d.map(a => `'${a.route}': c${a.hash}`).join(',\n')}
+          ${d.map(a => `'${a.route}': ${a.import}`).join(',\n')}
         }
         `
       }
