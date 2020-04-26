@@ -79,12 +79,12 @@ module.exports = function router(pagesDir) {
         return `
         ${d.filter(d => d.route != '*').map(d => d.import).join('\n')}
         
-        import { ChunkGenerator } from '@willowy/runtime/chunk.js'
-        import ChunkComponent from '@willowy/runtime/Chunk.svelte'
-        const Chunk = ChunkGenerator(ChunkComponent)
+        // import { ChunkGenerator } from '@willowy/runtime/chunk.js'
+        // import ChunkComponent from '@willowy/runtime/Chunk.svelte'
+        // const Chunk = ChunkGenerator(ChunkComponent)
 
         export default {
-          ${render(routes).map(a => `'${a.route}': c${a.hash}`).join(',\n')}
+          ${d.map(a => `'${a.route}': c${a.hash}`).join(',\n')}
         }
         `
       }
@@ -97,17 +97,13 @@ module.exports = function router(pagesDir) {
 
 
 async function walk(dir = './pages', root = '.') {
-  const files = await readdir(dir)
-
-  return map(files, async p => {
+  files = await map(await readdir(dir), async p => {
     if (p.startsWith('_')) return
     const filepath = path.join(dir, p)
 
     const name = p.replace(/\.svelte$/, '')
       .replace(/\.js$/, '')
       .replace(/\[(.*)\]/, ':$1')
-
-    
 
     if (await isDir(filepath)) {
       return {
@@ -122,4 +118,6 @@ async function walk(dir = './pages', root = '.') {
       file: filepath,
     }
   })
+
+  return files.filter(a => a)
 }

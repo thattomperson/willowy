@@ -23,13 +23,8 @@ module.exports = function virtual() {
   return {
     name: 'virtual',
 
-    resolveId(id, importer) {
+    resolveId(id) {
       if (id in modules) return PREFIX + id;
-
-      if (importer) {
-        // eslint-disable-next-line no-param-reassign
-        if (importer.startsWith(PREFIX)) importer = importer.slice(PREFIX.length);
-      }
     },
 
     load(id) {
