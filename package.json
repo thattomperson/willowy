@@ -1,12 +1,42 @@
 {
   "name": "willowy",
-  "version": "0.0.2",
+  "version": "0.0.0-development",
   "description": "",
-  "bin": "./willowy",
   "author": "",
   "license": "ISC",
   "scripts": {
-    "build-docs": "./willowy build docs"
+    "build": "pika build",
+    "version": "npm run build",
+    "postversion": "pika publish",
+    "test": "true",
+    "build-docs": "./willowy build docs",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "semantic-release": "semantic-release"
+  },
+  "files": [
+    "lib/*"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "@pika/plugin-ts-standard-pkg"
+      ],
+      [
+        "@pika/plugin-build-node"
+      ],
+      [
+        "@pika/plugin-simple-bin",
+        {
+          "bin": "willowy"
+        }
+      ]
+    ]
   },
   "dependencies": {
     "@rollup/plugin-commonjs": "^11.1.0",
@@ -19,11 +49,23 @@
     "svelte": "^3.20.1"
   },
   "devDependencies": {
+    "@pika/pack": "^0.5.0",
+    "@pika/plugin-build-node": "^0.9.2",
+    "@pika/plugin-simple-bin": "^0.9.2",
+    "@pika/plugin-ts-standard-pkg": "^0.9.2",
+    "@types/sade": "^1.6.0",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
+    "eslint-plugin-standard": "^4.0.1",
+    "husky": "^4.2.5",
+    "typescript": "^3.8.3",
+    "semantic-release": "^17.0.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thattomperson/willowy.git"
   }
 }

@@ -1,6 +1,6 @@
 const path = require('path')
 
-module.exports = function router(routes) {
+module.exports = function router (routes) {
   const PREFIX = '\0virtual-router:'
 
   const name = 'router-manifest'
@@ -14,7 +14,6 @@ module.exports = function router(routes) {
     },
     async load (id) {
       if (id === PREFIX + name) {
-        
         const sort = (a, b) => {
           if (a.route === '*') {
             return 1
@@ -79,4 +78,3 @@ module.exports = function router(routes) {
     }
   }
 }
-

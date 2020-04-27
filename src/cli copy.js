@@ -6,7 +6,6 @@ const util = require('util')
 const readdir = util.promisify(fs.readdir)
 const lstat = util.promisify(fs.lstat)
 
-
 const isDir = async path => (await lstat(path)).isDirectory()
 
 const rollup = require('rollup')
@@ -19,8 +18,7 @@ const html = require('./plugins/html')
 const servor = require('servor')
 const svelteResolve = require('./plugins/svelte-resolve')
 
-
-async function walk(dir = './pages', root = '.') {
+async function walk (dir = './pages', root = '.') {
   const files = await map(await readdir(dir), async p => {
     if (p.startsWith('_')) return
     const filepath = path.join(dir, p)
@@ -46,7 +44,6 @@ async function walk(dir = './pages', root = '.') {
   return files.filter(a => a)
 }
 
-
 const pkg = require('../package.json')
 
 const prog = sade(pkg.name).version(pkg.version)
@@ -61,7 +58,7 @@ const outputOptions = async (dest) => ({
 
 const inputOptions = async (src) => {
   const routes = await walk(path.join(src, 'pages'))
-  
+
   return {
     input: '@willowy/runtime/client.js',
     plugins: [
