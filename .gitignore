@@ -1,5 +1,6 @@
 /examples/*/
 /examples/*/public
+/docs/public
 
 /node_modules/
 /lib/
