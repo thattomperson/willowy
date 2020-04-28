@@ -1,5 +1,5 @@
 const path = require('path')
-const { inputOptions, outputOptions } = require('../internal')
+const { options } = require('../internal')
 const rollup = require('rollup')
 
 module.exports = prog => prog.command('build [src] [dest]')
@@ -9,6 +9,8 @@ module.exports = prog => prog.command('build [src] [dest]')
     src = path.resolve(src)
     dest = path.resolve(dest)
 
-    const bundle = await rollup.rollup(await inputOptions(src, dest))
+    const { inputOptions, outputOptions } = options(src, dest)
+
+    const bundle = await rollup.rollup(await inputOptions(src))
     return bundle.write(await outputOptions(dest))
   })

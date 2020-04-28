@@ -10,7 +10,7 @@ const svelteResolve = require('./plugins/svelte-resolve')
 
 const { walk } = require('./utils')
 
-async function inputOptions (src, dest) {
+async function inputOptions (src, outputDirName = 'dist') {
   const routes = await walk(path.join(src, 'pages'))
 
   return {
@@ -24,24 +24,32 @@ async function inputOptions (src, dest) {
       svelteResolve(),
       svelte({ emitCss: true }),
       postcss({
-        extract: '__/styles.css'
+        extract: path.join(outputDirName, 'styles.css')
       }),
       html(path.join(src, 'pages'))
     ]
   }
 }
 
-async function outputOptions (dir) {
+async function outputOptions (dir, outputDirName = 'dist') {
   return {
     format: 'esm',
     dir,
     sourcemap: true,
-    chunkFileNames: '__/[name]-[hash].js',
-    entryFileNames: '__/client-[hash].js'
+    chunkFileNames: path.join(outputDirName, '[name]-[hash].js'),
+    entryFileNames: path.join(outputDirName, 'client-[hash].js')
+  }
+}
+
+async function options (src, dest, outputDirName = 'dist') {
+  return {
+    inputOptions: await inputOptions(src, outputDirName),
+    outputOptions: await outputOptions(dest, outputDirName)
   }
 }
 
 module.exports = {
+  options,
   inputOptions,
   outputOptions
 }
