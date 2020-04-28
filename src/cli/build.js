@@ -9,8 +9,8 @@ module.exports = prog => prog.command('build [src] [dest]')
     src = path.resolve(src)
     dest = path.resolve(dest)
 
-    const { inputOptions, outputOptions } = options(src, dest)
+    const { inputOptions, outputOptions } = await options(src, dest)
 
-    const bundle = await rollup.rollup(await inputOptions(src))
-    return bundle.write(await outputOptions(dest))
+    const bundle = await rollup.rollup(inputOptions)
+    return bundle.write(outputOptions)
   })
