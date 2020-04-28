@@ -5,3 +5,10 @@
 <h1>About</h1>
 
 <a href="/">Index</a>
+
+
+<style>
+h1 {
+  color: red;
+}
+</style>

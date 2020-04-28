@@ -29,7 +29,6 @@ module.exports = function virtual () {
 
     load (id) {
       if (id.startsWith(PREFIX)) {
-        // eslint-disable-next-line no-param-reassign
         id = id.slice(PREFIX.length)
 
         return id in modules ? modules[id] : null

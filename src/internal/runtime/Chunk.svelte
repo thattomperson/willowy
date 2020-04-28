@@ -1,7 +1,6 @@
 <script>
-    import { fly } from 'svelte/transition'
     import Loadable from '@willowy/runtime/Loadable.svelte'
-    import { get } from 'svelte/store'
+    
     export let params = {}
     export let dynamicImport
     export let delay = 0
