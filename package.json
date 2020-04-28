@@ -5,10 +5,9 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "build": "tsc",
     "version": "npm run build",
     "test": "true",
-    "build-docs": "./willowy build docs",
+    "build-docs": "node ./src/cli.js build docs",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "semantic-release": "semantic-release"

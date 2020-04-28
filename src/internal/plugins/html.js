@@ -10,7 +10,7 @@ module.exports = function html (src) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Willowy App</title>
-        ${styles.map(url => `<link rel="preload" href="/${url.fileName}" as="style">`).join('\n')}
+        ${styles.map(module => `<link rel="stylesheet" href="/${module.fileName}">`).join('\n')}
         <link rel="preload" href="/${module.fileName}" as="script">
         ${module.imports.map(url => `<link rel="preload" href="/${url}" as="script">`).join('\n')}
       </head>

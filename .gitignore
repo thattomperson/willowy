@@ -1,6 +1,6 @@
 /examples/*/
 /examples/*/public
-/docs/public
+public
 
 /node_modules/
 /lib/
