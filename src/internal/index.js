@@ -7,6 +7,9 @@ const runtime = require('./plugins/runtime')
 const html = require('./plugins/html')
 const postcss = require('rollup-plugin-postcss')
 const svelteResolve = require('./plugins/svelte-resolve')
+const postcssPresetEnv = require('postcss-preset-env')
+const postcssImport = require('postcss-import')
+const postcssHoist = require('./plugins/postcss-hoist')
 
 const { walk } = require('./utils')
 
@@ -24,8 +27,14 @@ async function inputOptions (src, outputDirName = 'dist') {
       svelteResolve(),
       svelte({ emitCss: true }),
       postcss({
-        extract: path.join(outputDirName, 'styles.css')
+        plugins: [
+          postcssImport(),
+          postcssPresetEnv()
+        ],
+        extract: true,
+        sourceMap: true
       }),
+      postcssHoist(),
       html(path.join(src, 'pages'))
     ]
   }
@@ -37,7 +46,8 @@ async function outputOptions (dir, outputDirName = 'dist') {
     dir,
     sourcemap: true,
     chunkFileNames: path.join(outputDirName, '[name]-[hash].js'),
-    entryFileNames: path.join(outputDirName, 'client-[hash].js')
+    entryFileNames: path.join(outputDirName, 'client-[hash].js'),
+    assetFileNames: path.join(outputDirName, '[name]-[hash][extname]')
   }
 }
 

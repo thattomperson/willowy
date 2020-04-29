@@ -2,13 +2,14 @@
   <title>Test</title>
 </svelte:head>
 
-<h1>About</h1>
+<h1>Test</h1>
 
 <a href="/">Index</a>
 
 
 <style>
 h1 {
-  color: red;
+  font-family: 'Righteous', sans-serif;
+  color: purple;
 }
 </style>
