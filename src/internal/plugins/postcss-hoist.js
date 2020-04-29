@@ -15,7 +15,9 @@ module.exports = function () {
       await Promise.all(Object.values(bundle).filter(a => a.fileName.endsWith('.css')).map(async asset => {
         return postcss([hoist])
           .process(asset.source)
-          .then(result => { bundle[asset.fileName].source = result.css })
+          .then(result => {
+            bundle[asset.fileName].source = result.css
+          })
       }))
 
       return null
