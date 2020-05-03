@@ -1,7 +1,7 @@
 {
   "name": "root",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "devDependencies": {
     "cz-lerna-changelog": "^2.0.2",
     "eslint-plugin-svelte3": "^2.7.3",
@@ -21,7 +21,10 @@
     }
   },
   "standard-version": {
-    "packageFiles": ["package.json", "lerna.json"],
+    "packageFiles": [
+      "package.json",
+      "lerna.json"
+    ],
     "scripts": {
       "posttag": "git push --tags && lerna publish"
     }
