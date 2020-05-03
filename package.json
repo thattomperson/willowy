@@ -14,7 +14,7 @@
     "lerna": "^3.20.2"
   },
   "scripts": {
-    "dev:docs": "node ./packages/willowy/src/cli watch docs",
+    "watch:docs": "node ./packages/willowy/src/cli watch docs",
     "build:docs": "node ./packages/willowy/src/cli build docs",
     "postinstall": "lerna bootstrap",
     "lint": "eslint packages",

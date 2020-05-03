@@ -67,16 +67,29 @@
     }, 50)
   })
 
-  const onclick = event => {
+  const click = event => {
+    console.log(event)
     if (event.target.tagName == 'A' && window.location.host == event.target.host) {
       event.preventDefault();
       event.stopPropagation();
       push(event.target.pathname)
     }
   }
+
+  let timeout
+  const mousemove = event => {
+    clearTimeout(timeout)
+    if (event.target.tagName == 'A' && window.location.host == event.target.host) {
+      timeout = setTimeout(() => {
+        const { route } = match(event.target.pathname)
+        route.layout()
+        route.component()
+      }, 20)
+    }
+  }
 </script>
 
-<div on:click={onclick}>
+<div on:click={click} on:mousemove={mousemove}>
   {#if $route}
     <Layouts layouts={$route.layouts}>
       <svelte:component this={$route.component.default} {...$route.data} />
