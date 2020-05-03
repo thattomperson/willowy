@@ -50,9 +50,9 @@ async function outputOptions (dir, outputDirName) {
     format: 'esm',
     dir,
     sourcemap: true,
-    chunkFileNames: path.join(outputDirName, '[name]-[hash].js'),
+    chunkFileNames: path.join(outputDirName, '[hash].js'),
     entryFileNames: path.join(outputDirName, 'client-[hash].js'),
-    assetFileNames: path.join(outputDirName, '[name]-[hash][extname]')
+    assetFileNames: path.join(outputDirName, '[hash][extname]')
   }
 }
 
