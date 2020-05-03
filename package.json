@@ -1,7 +1,7 @@
 {
   "name": "willowy-root",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.4",
   "devDependencies": {
     "cz-lerna-changelog": "^2.0.2",
     "eslint-plugin-svelte3": "^2.7.3",
@@ -23,6 +23,9 @@
   "standard-version": {
     "bumpFiles": [{
       "filename": "lerna.json",
+      "type": "json"
+    },{
+      "filename": "package.json",
       "type": "json"
     }],
     "scripts": {
