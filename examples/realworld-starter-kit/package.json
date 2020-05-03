@@ -1,0 +1,7 @@
+{
+  "name": "willowy-example-realworld-starter-kit",
+  "script": {
+    "build": "npx willowy build",
+    "dev": "npx willowy serve"
+  }
+}

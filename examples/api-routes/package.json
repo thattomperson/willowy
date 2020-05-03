@@ -1,0 +1,7 @@
+{
+  "name": "willowy-example-api-routes",
+  "script": {
+    "build": "npx willowy build",
+    "dev": "npx willowy serve"
+  }
+}

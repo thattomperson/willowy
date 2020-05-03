@@ -1,0 +1,44 @@
+<style>
+  .b {
+    top: 0;
+    left: 0;
+    position: fixed;
+    height: 0px;
+    width: 0%;
+    background: blue;
+    opacity: 0;
+    transition-property: width, opacity, height;
+    transition-duration: 500ms, 100ms, 100ms;
+    transition-timing-function: ease-out, ease-in-out, ease-in;
+  }
+  .l, .c, .p, .d {
+    opacity: 1;
+    height: 5px;
+  }
+
+  .l {
+    width: 25%;
+  }
+
+  .c {
+    width: 50%;
+  }
+
+  .p {
+    width: 75%;
+  }
+
+  .d {
+    width: 100%;
+    transition-delay: 0s, 0s, 500ms;
+    height: 0px;
+  }
+</style>
+
+<div
+  class="b"
+  class:l={$loading == LAYOUT}
+  class:c={$loading == COMPONENT}
+  class:p={$loading == PRELOAD}
+  class:d={$loading == DONE}
+></div>

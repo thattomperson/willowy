@@ -1,0 +1,25 @@
+{
+  "name": "@willowy/router",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Thomas Albrighton <thomasalbrighton@gmail.com>",
+  "homepage": "https://github.com/thattomperson/willowy#readme",
+  "license": "ISC",
+  "main": "router.svelte",
+  "files": [
+    "router.svelte"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thattomperson/willowy.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/thattomperson/willowy/issues"
+  },
+  "peerDependencies": {
+    "svelte": "^3.21.0"
+  }
+}
