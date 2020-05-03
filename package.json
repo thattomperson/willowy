@@ -1,21 +1,29 @@
 {
   "name": "root",
   "private": true,
+  "version": "0.0.0",
   "devDependencies": {
     "cz-lerna-changelog": "^2.0.2",
     "eslint-plugin-svelte3": "^2.7.3",
     "lerna": "^3.20.2",
-    "lerna-semantic-release": "^9.1.0"
+    "standard-version": "^7.1.0"
   },
   "scripts": {
     "dev:docs": "node ./packages/willowy/src/cli watch docs",
     "build:docs": "node ./packages/willowy/src/cli build docs",
     "lint": "eslint packages",
-    "lint:fix": "eslint packages --fix"
+    "lint:fix": "eslint packages --fix",
+    "release": "standard-version"
   },
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint"
+    }
+  },
+  "standard-version": {
+    "packageFiles": ["package.json", "lerna.json"],
+    "scripts": {
+      "posttag": "git push --tags && lerna publish"
     }
   },
   "config": {
