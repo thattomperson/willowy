@@ -1,52 +1,33 @@
 {
   "name": "willowy-root",
   "private": true,
-  "version": "0.0.5",
   "devDependencies": {
     "cz-lerna-changelog": "^2.0.2",
-    "eslint-plugin-svelte3": "^2.7.3",
-    "lerna": "^3.20.2",
-    "standard-version": "^7.1.0"
-  },
-  "scripts": {
-    "dev:docs": "node ./packages/willowy/src/cli watch docs",
-    "build:docs": "node ./packages/willowy/src/cli build docs",
-    "lint": "eslint packages",
-    "lint:fix": "eslint packages --fix",
-    "release": "standard-version"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint"
-    }
-  },
-  "standard-version": {
-    "bumpFiles": [
-      {
-        "filename": "lerna.json",
-        "type": "json"
-      },
-      {
-        "filename": "package.json",
-        "type": "json"
-      }
-    ],
-    "scripts": {
-      "posttag": "lerna publish"
-    }
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-lerna-changelog"
-    }
-  },
-  "dependencies": {
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "husky": "^4.2.5"
+    "eslint-plugin-svelte3": "^2.7.3",
+    "husky": "^4.2.5",
+    "lerna": "^3.20.2"
+  },
+  "scripts": {
+    "dev:docs": "node ./packages/willowy/src/cli watch docs",
+    "build:docs": "node ./packages/willowy/src/cli build docs",
+    "lint": "eslint packages",
+    "lint:fix": "eslint packages --fix",
+    "release": "lerna publish --conventional-commits"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-lerna-changelog"
+    }
   }
 }
