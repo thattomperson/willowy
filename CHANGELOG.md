@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/thattomperson/willowy/compare/v0.0.4...v0.0.5) (2020-05-03)
+
+
+### Features
+
+* **router:** nested layouts now render correctly on all pages ([6eaa5e1](https://github.com/thattomperson/willowy/commit/6eaa5e16a6e34eba94d0d1e20e3f7f5bceb18cd0))
+
 ### [0.0.4](https://github.com/thattomperson/willowy/compare/v0.0.3...v0.0.4) (2020-05-03)
 
 ### [0.0.3](https://github.com/thattomperson/willowy/compare/v0.0.1...v0.0.3) (2020-05-03)
