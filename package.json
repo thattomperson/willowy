@@ -11,7 +11,9 @@
     "dev:docs": "node ./packages/willowy/src/cli watch docs",
     "build:docs": "node ./packages/willowy/src/cli build docs",
     "lint": "eslint packages",
-    "lint:fix": "eslint packages --fix"
+    "lint:fix": "eslint packages --fix",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "husky": {
     "hooks": {
@@ -30,6 +32,8 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "husky": "^4.2.5"
-  }
+    "husky": "^4.2.5",
+    "snyk": "^1.316.2"
+  },
+  "snyk": true
 }
