@@ -21,13 +21,9 @@
     }
   },
   "standard-version": {
-    "packageFiles": [
+    "bumpFiles": [
       {
-        "file": "package.json",
-        "type": "json"
-      },
-      {
-        "file": "lerna.json",
+        "file": "./lerna.json",
         "type": "json"
       }
     ],
