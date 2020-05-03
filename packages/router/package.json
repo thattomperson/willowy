@@ -6,6 +6,9 @@
   "homepage": "https://github.com/thattomperson/willowy#readme",
   "license": "ISC",
   "main": "router.svelte",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "router.svelte"
   ],
