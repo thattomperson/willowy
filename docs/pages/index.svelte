@@ -2,7 +2,6 @@
 
 <a href="/about">About</a>
 
-
 <style>
 @import url('//fonts.googleapis.com/css2?family=Righteous&display=swap&text=Willowy');
 

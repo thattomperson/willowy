@@ -2,6 +2,7 @@ const path = require('path')
 const { options } = require('../internal')
 const rollup = require('rollup')
 const servor = require('servor')
+const chalk = require('chalk')
 
 module.exports = prog => prog.command('watch [src] [dest]')
   .option('--port, -p', 'port to start the dev server on', 8080)
@@ -24,8 +25,20 @@ module.exports = prog => prog.command('watch [src] [dest]')
 
     watcher.on('event', event => {
       switch (event.code) {
+        case 'ERROR':
+          if (
+            event.error.code === 'PARSE_ERROR' ||
+              (event.error.code === 'PLUGIN_ERROR' && event.error.name === 'ParseError')
+          ) {
+            console.log(chalk.red(`Couldn't parse ${chalk.bold(path.relative(src, event.error.loc ? event.error.loc.file : event.error.id))}`))
+            console.log(event.error.message)
+            console.log(chalk.green(event.error.frame))
+          } else {
+            console.log(event.error)
+          }
+          break
         case 'END':
-          console.log('Rebuilt')
+          console.log(chalk.cyan.bold('Finished Building'))
           if (!server) {
             server = servor({
               root: dest,
@@ -35,7 +48,7 @@ module.exports = prog => prog.command('watch [src] [dest]')
               browse: true
             })
             server.then(res => {
-              console.log(`DevServer listening on ${res.url}`)
+              console.log(`DevServer listening on ${chalk.bold(res.url)}`)
             })
           }
 

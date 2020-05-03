@@ -13,7 +13,7 @@ jobs:
         with:
             node-version: 12.x
       - run: npm ci
-      - run: npm run build-docs
+      - run: npm run build:docs
       - name: deploy
         if: success()
         uses: crazy-max/ghaction-github-pages@v1

@@ -1,31 +1,38 @@
 const path = require('path')
 const fs = require('fs')
-const { map } = require('async')
-const util = require('util')
-const readdir = util.promisify(fs.readdir)
-const lstat = util.promisify(fs.lstat)
-const isDir = async path => (await lstat(path)).isDirectory()
 
-const walk = async dir => map(await readdir(dir), async p => {
-  if (p.startsWith('_')) return
-  const filepath = path.join(dir, p)
+module.exports = function walk (dir, routePrefix = '', layouts = [], prefix = 'route') {
+  const files = fs.readdirSync(dir)
 
-  const name = p.replace(/\.svelte$/, '')
-    .replace(/\.js$/, '')
-    .replace(/\[(.*)\]/, ':$1')
-
-  if (await isDir(filepath)) {
-    return {
-      name,
-      children: await walk(filepath)
-    }
+  if (files.includes('_root.svelte')) {
+    layouts = [path.join(dir, '_root.svelte')]
   }
 
-  return {
-    name: name === 'index' ? '' : name,
-    server: p.endsWith('.js'),
-    file: filepath
+  if (files.includes('_layout.svelte')) {
+    layouts.push(path.join(dir, '_layout.svelte'))
   }
-}).then(files => files.filter(Boolean))
+  // filter out files that start with _
+  return files.filter(name => !name.startsWith('_'))
+  // loop and parse and nest
+    .map(p => {
+      const filepath = path.join(dir, p)
 
-module.exports = walk
+      const name = `${prefix}_${path.parse(p).name}`
+
+      const route = p.replace(/\.svelte$/, '')
+        .replace(/\.js$/, '')
+        .replace(/\[(.*)\]/, ':$1')
+        .replace(/^index$/i, '')
+
+      if (fs.statSync(filepath).isDirectory()) {
+        return walk(filepath, route, [...layouts], name)
+      }
+
+      return {
+        name,
+        route: '/' + (route ? path.join(routePrefix, route) : routePrefix),
+        component: filepath,
+        layouts: layouts.length ? layouts : ['@willowy/runtime/_layout.svelte']
+      }
+    }).flat()
+}

@@ -1,16 +1,15 @@
-<script context="module">
+
+<script>
+  import { writable, derived } from 'svelte/store'
+  import Layouts from './layout.svelte'
+
   const path = writable(window.location.pathname)
 
-  export function push(pathname) {
+  function push(pathname) {
     console.log('navigating to', pathname)
     window.history.pushState(null, null, pathname)
     path.set(pathname)
   }
-</script>
-
-<script>
-  import { writable, derived } from 'svelte/store'
-  import { onMount } from 'svelte'
 
   const IDLE = null
   const LAYOUT = 1;
@@ -45,7 +44,9 @@
     let out = {}
     const { route, keys } = match(path)
     $loading = LAYOUT
-    out.layout = await route.layout()
+    out.layouts = await Promise.all(route.layout())
+
+    console.log(out.layouts)
 
     $loading = COMPONENT
     out.component = await route.component()
@@ -66,25 +67,19 @@
     }, 50)
   })
 
-  onMount(() => {
-    const onclick = event => {
-      console.log(event)
-      if (event.target.tagName == 'A') {
-        event.preventDefault();
-        event.stopPropagation();
-        push(event.target.pathname)
-      }
+  const onclick = event => {
+    if (event.target.tagName == 'A' && window.location.host == event.target.host) {
+      event.preventDefault();
+      event.stopPropagation();
+      push(event.target.pathname)
     }
-
-   container.addEventListener('click', onclick, false)
-    return () => container.removeEventListener('click', onclick, false)
-  })
+  }
 </script>
 
-<div bind:this={container}>
+<div on:click={onclick}>
   {#if $route}
-    <svelte:component this={$route.layout.default}>
+    <Layouts layouts={$route.layouts}>
       <svelte:component this={$route.component.default} {...$route.data} />
-    </svelte:component>
+    </Layouts>
   {/if}
 </div>

@@ -1,4 +1,3 @@
-const path = require('path')
 const regexparam = require('regexparam')
 
 module.exports = function router (routes) {
@@ -39,41 +38,17 @@ module.exports = function router (routes) {
           return -1
         }
 
-        const render = (routes, prefix = '') => {
-          return routes.filter(r => r.children || !r.server).map(route => {
-            if (route.children) {
-              return render(route.children, path.join(prefix, route.name))
-            }
-
-            let pathname = path.join(prefix, route.name)
-
-            let defaultRoute = null
-            if (pathname === '.') {
-              pathname = ''
-              defaultRoute = {
-                ...regexparam('*'),
-                route: '*',
-                component: `() => import('${route.file}')`
-              }
-            }
-            return [{
-              ...regexparam(`/${pathname}`),
-              route: `/${pathname}`,
-              component: `() => import('${route.file}')`
-            }, defaultRoute]
-          }).flat().filter(a => a).sort(sort)
-        }
-
-        const d = render(routes)
-
         return `export default [
-          ${d.map(a => `{
-            keys: ${JSON.stringify(a.keys)},
-            pattern: ${a.pattern.toString()},
-            route: '${a.route}',
-            component: ${a.component},
-            layout: () => import('@willowy/runtime/_layout.svelte'),
-          }`).join(',\n')}
+          ${routes.map(r => {
+            const { keys, pattern } = regexparam(r.route)
+            return `{
+              keys: ${JSON.stringify(keys)},
+              pattern: ${pattern.toString()},
+              route: '${r.route}',
+              component: () => import('${r.component}'),
+              layout: () => [${r.layouts.map(a => `import('${a}')`).join(',')}],
+            }`
+          }).sort(sort).join(',\n')}
         ]`
       }
 

@@ -1,5 +1,4 @@
 <div class="home-page">
-
   <div class="banner">
     <div class="container">
       <h1 class="logo-font">conduit</h1>
