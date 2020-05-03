@@ -13,7 +13,9 @@
     "build:docs": "node ./packages/willowy/src/cli build docs",
     "lint": "eslint packages",
     "lint:fix": "eslint packages --fix",
-    "release": "standard-version"
+    "release": "standard-version",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "husky": {
     "hooks": {
@@ -21,13 +23,16 @@
     }
   },
   "standard-version": {
-    "bumpFiles": [{
-      "filename": "lerna.json",
-      "type": "json"
-    },{
-      "filename": "package.json",
-      "type": "json"
-    }],
+    "bumpFiles": [
+      {
+        "filename": "lerna.json",
+        "type": "json"
+      },
+      {
+        "filename": "package.json",
+        "type": "json"
+      }
+    ],
     "scripts": {
       "posttag": "lerna publish"
     }
@@ -44,6 +49,8 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "husky": "^4.2.5"
-  }
+    "husky": "^4.2.5",
+    "snyk": "^1.316.2"
+  },
+  "snyk": true
 }
