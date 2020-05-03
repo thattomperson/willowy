@@ -22,8 +22,14 @@
   },
   "standard-version": {
     "packageFiles": [
-      "package.json",
-      "lerna.json"
+      {
+        "file": "package.json",
+        "type": "json"
+      },
+      {
+        "file": "lerna.json",
+        "type": "json"
+      }
     ],
     "scripts": {
       "posttag": "git push --tags && lerna publish"
