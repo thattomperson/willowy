@@ -1,7 +1,7 @@
 {
-  "name": "root",
+  "name": "willowy-root",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "devDependencies": {
     "cz-lerna-changelog": "^2.0.2",
     "eslint-plugin-svelte3": "^2.7.3",
@@ -21,14 +21,12 @@
     }
   },
   "standard-version": {
-    "bumpFiles": [
-      {
-        "file": "./lerna.json",
-        "type": "json"
-      }
-    ],
+    "bumpFiles": [{
+      "filename": "lerna.json",
+      "type": "json"
+    }],
     "scripts": {
-      "posttag": "git push --tags && lerna publish"
+      "posttag": "lerna publish"
     }
   },
   "config": {
