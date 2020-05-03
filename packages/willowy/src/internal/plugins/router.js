@@ -39,7 +39,7 @@ module.exports = function router (routes) {
         }
 
         return `export default [
-          ${routes.map(r => {
+          ${routes.sort(sort).map(r => {
             const { keys, pattern } = regexparam(r.route)
             return `{
               keys: ${JSON.stringify(keys)},
@@ -48,7 +48,7 @@ module.exports = function router (routes) {
               component: () => import('${r.component}'),
               layout: () => [${r.layouts.map(a => `import('${a}')`).join(',')}],
             }`
-          }).sort(sort).join(',\n')}
+          }).join(',\n')}
         ]`
       }
 

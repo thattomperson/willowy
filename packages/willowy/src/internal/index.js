@@ -17,8 +17,6 @@ const { walk } = require('./utils')
 async function inputOptions (src, dev) {
   const pages = await walk(path.join(src, 'pages'))
 
-  console.log(pages)
-
   return {
     input: '@willowy/runtime/client.js',
     preserveEntrySignatures: false,
