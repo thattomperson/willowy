@@ -16,6 +16,7 @@
   "scripts": {
     "dev:docs": "node ./packages/willowy/src/cli watch docs",
     "build:docs": "node ./packages/willowy/src/cli build docs",
+    "postinstall": "lerna bootstrap",
     "lint": "eslint packages",
     "lint:fix": "eslint packages --fix",
     "release": "lerna publish --conventional-commits"
