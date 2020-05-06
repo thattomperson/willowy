@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0](https://github.com/thattomperson/willowy/compare/v0.0.8...v0.1.0) (2020-05-06)
+
+
+### Bug Fixes
+
+* **gh-pages:** files that start with _ seem to 404 ([28c623c](https://github.com/thattomperson/willowy/commit/28c623c04aa95980630624bbdd7477ee877b6dfb))
+
+
+
+
+
 ## [0.0.8](https://github.com/thattomperson/willowy/compare/v0.0.7...v0.0.8) (2020-05-03)
 
 
