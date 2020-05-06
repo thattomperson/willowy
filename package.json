@@ -16,10 +16,10 @@
   "scripts": {
     "watch:site": "node ./packages/willowy/src/cli watch site",
     "build:site": "node ./packages/willowy/src/cli build site",
-    "postinstall": "lerna bootstrap",
     "lint": "eslint packages",
     "lint:fix": "eslint packages --fix",
-    "release": "lerna publish --conventional-commits"
+    "release": "lerna publish --conventional-commits",
+    "postinstall": "lerna bootstrap"
   },
   "husky": {
     "hooks": {
