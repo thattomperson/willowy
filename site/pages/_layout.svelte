@@ -3,6 +3,7 @@
     <div>
       <nav>
         <a href="/"><h1>Willowy</h1></a>
+        <a href="/#features">Features</a>
         <a href="/docs/getting-started">Docs</a>
         <a href="/learn/lession-1">learn</a>
         <a href="https://github.com/thattomperson/willowy/tree/master/examples">Examples</a>
@@ -12,10 +13,13 @@
   </div>
 </header>
 
-<slot></slot>
+<Container>
+  <slot></slot>
+</Container>
 
 <script>
 import Icon from '../components/Icon.svelte'
+import Container from '../components/Container.svelte'
 import { github } from '../icons'
 </script>
 
@@ -35,6 +39,24 @@ import { github } from '../icons'
 :global(h3, h4, h5, h6) {
   font-family: 'Raleway', sans-serif;
   font-weight: 300;
+}
+
+:global(code, kbd) {
+  background: #333;
+  color: #fff;
+  border-radius: 5px;
+  padding: 1px 3px;
+}
+
+:global(kbd::before) {
+  content: '$';
+  display: inline-block;
+  padding-right: 5px;
+}
+
+:global(pre > code) {
+  display: block;
+  padding: 10px;
 }
 
 h1 {
@@ -73,7 +95,8 @@ nav a {
   line-height: 18px;
   text-decoration: none;
   color: #696969;
-  transition: color 200ms ease-in-out
+  transition: color 200ms ease-in-out;
+  padding: 1em;
 }
 
 nav a:hover {

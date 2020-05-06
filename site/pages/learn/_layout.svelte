@@ -1,9 +1,7 @@
 <Container sidebar>
   <aside>
     <ul>
-      <li><h4>Stuff</h4></li>
-      <li><a href="/docs/getting-started">Getting Started</a></li>
-      <li><a href="/docs/installing">Installing</a></li>
+      <li><a href="/learn/lession-1">Lesson 1 - Making a page</a></li>
     </ul>
   </aside>
 

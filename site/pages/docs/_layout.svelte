@@ -1,7 +1,6 @@
 <Container sidebar>
   <aside>
     <ul>
-      <li><h4>Stuff</h4></li>
       <li><a href="/docs/getting-started">Getting Started</a></li>
       <li><a href="/docs/installing">Installing</a></li>
     </ul>
