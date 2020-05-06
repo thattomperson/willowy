@@ -1,0 +1,2 @@
+import{S as t,i as e,s,a,e as n,b as o,c,n as l,d as r}from"./client-e06ef713.js";function d(t){let e,s,d,i;return{c(){e=a(),s=n("h1"),s.textContent="Test",d=a(),i=n("a"),i.textContent="Index",document.title="Test",o(s,"class","svelte-3t1d3g"),o(i,"href","/")},m(t,a){c(t,e,a),c(t,s,a),c(t,d,a),c(t,i,a)},p:l,i:l,o:l,d(t){t&&r(e),t&&r(s),t&&r(d),t&&r(i)}}}export default class extends t{constructor(t){super(),e(this,t,null,d,s,{})}}
+//# sourceMappingURL=ddc17047.js.map
