@@ -24,7 +24,7 @@
   export let routes
   let container
 
-  const match = path => {
+  function match(path) {
     for (let index = 0; index < routes.length; index++) {
       const route = routes[index];
 
@@ -40,53 +40,53 @@
     }
   }
 
+
   const route = derived(path, async (path, set) => {
     let out = {}
     const { route, keys } = match(path)
-    $loading = LAYOUT
     out.layouts = await Promise.all(route.layout())
-
-    console.log(out.layouts)
-
-    $loading = COMPONENT
     out.component = await route.component()
-    out.data = keys
-    
+    out.data = { params: keys }
+  
     if (out.component.preload) {
-      $loading = PRELOAD
-      out.data = {...await out.component.preload(keys), ...keys}
+      out.data = {...await out.component.preload(keys), params: keys }
     }
 
-    $loading = DONE
     set(out)
-
-    setTimeout(() => {
-      if ($loading == DONE) {
-        $loading = IDLE
-      }
-    }, 50)
   })
 
-  const click = event => {
-    console.log(event)
-    if (event.target.tagName == 'A' && window.location.host == event.target.host) {
-      event.preventDefault();
-      event.stopPropagation();
-      push(event.target.pathname)
+  function findAnchor(node) {
+    while (node && node.nodeName.toUpperCase() !== 'A') node = node.parentNode; 
+    return node;
+  }
+  function debounce(cb, delay = 10) {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout)
+      timeout = setTimeout(cb, delay, ...args)
     }
   }
 
-  let timeout
-  const mousemove = event => {
-    clearTimeout(timeout)
-    if (event.target.tagName == 'A' && window.location.host == event.target.host) {
-      timeout = setTimeout(() => {
-        const { route } = match(event.target.pathname)
-        route.layout()
-        route.component()
-      }, 20)
-    }
+  const click = event => {
+    let a = findAnchor(event.target)
+    if (!a) return;
+    if (a.host !== window.location.host) return;
+    
+    event.preventDefault();
+    event.stopPropagation();
+    push(a.pathname)
   }
+
+
+  const mousemove = debounce((event) => {
+    let a = findAnchor(event.target)
+    if (!a) return;
+    if (a.host !== window.location.host) return;
+
+    const { route } = match(a.pathname)
+    route.layout()
+    route.component()
+  })
 </script>
 
 <div on:click={click} on:mousemove={mousemove}>
