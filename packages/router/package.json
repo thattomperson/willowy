@@ -5,14 +5,12 @@
   "author": "Thomas Albrighton <thomasalbrighton@gmail.com>",
   "homepage": "https://github.com/thattomperson/willowy#readme",
   "license": "ISC",
-  "main": "router.svelte",
+  "main": "src/router.svelte",
   "publishConfig": {
     "access": "public"
   },
   "files": [
-    "router.svelte",
-    "layout.svelte",
-    "utils.js"
+    "src/*"
   ],
   "repository": {
     "type": "git",
